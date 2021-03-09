@@ -371,6 +371,7 @@ class FormEntry(models.Model):
         blank=True,
         help_text=_("Shown in templates if available.")
     )
+    description = models.TextField(_("Description"), blank=True, help_text=_("Description of the form."))
     slug = AutoSlugField(
         populate_from='name', verbose_name=_("Slug"), unique=True
     )
