@@ -24,6 +24,7 @@ class TextareaForm(forms.Form, BaseFormFieldPluginForm):
         ("required", False),
         ("max_length", ""),
         ("placeholder", ""),
+        ("video_enabled", False)
     ]
 
     label = forms.CharField(
@@ -72,6 +73,13 @@ class TextareaForm(forms.Form, BaseFormFieldPluginForm):
         label=_("Placeholder"),
         required=False,
         widget=forms.widgets.TextInput(
+            attrs={'class': theme.form_element_html_class}
+        )
+    )
+    video_enabled = forms.CharField(
+        label=_("Video Enabled"),
+        required=False,
+        widget=forms.widgets.Textarea(
             attrs={'class': theme.form_element_html_class}
         )
     )
