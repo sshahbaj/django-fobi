@@ -24,6 +24,7 @@ class MailSenderForm(forms.Form, BasePluginForm):
         ("form_field_name_to_email", ""),
         ("subject", ""),
         ("body", ""),
+        ("is_active", True)
     ]
 
     from_name = forms.CharField(
