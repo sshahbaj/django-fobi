@@ -83,7 +83,7 @@ class MailSenderHandlerMixin(object):
                 MULTI_EMAIL_FIELD_VALUE_SPLITTER
             )
 
-        send_mail(
+        send_mail.delay(
             safe_text(self.data.subject),
             u"{0}\n\n{1}".format(
                 safe_text(self.data.body),
@@ -92,7 +92,7 @@ class MailSenderHandlerMixin(object):
             self.data.from_email,
             to_email,
             fail_silently=False,
-            attachments=files.values()
+            attachments=None
         )
 
     def _prepare_files(self, request, form):
