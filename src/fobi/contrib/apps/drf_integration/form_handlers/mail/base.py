@@ -1,19 +1,18 @@
 import logging
-from mimetypes import guess_type
 import os
+import re
+from mimetypes import guess_type
+from string import Template
 
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-
 from six import PY3
 
-from ......base import IntegrationFormHandlerPlugin
-from ......helpers import extract_file_path
-
+from . import UID
 from ... import UID as INTEGRATE_WITH_UID
 from ...base import get_processed_serializer_data
-
-from . import UID
+from ......base import IntegrationFormHandlerPlugin
+from ......helpers import extract_file_path
 
 __title__ = 'fobi.contrib.apps.drf_integration.' \
             'fobi_integration_form_handlers.mail.base'
@@ -44,6 +43,10 @@ class MailHandlerPlugin(IntegrationFormHandlerPlugin):
             form_element_entries=None,
             **kwargs):
         """Run."""
+        is_active = form_handler_plugin.plugin_data.get("is_active")
+
+        if not is_active:
+            return
         base_url = form_handler_plugin.get_base_url(request)
 
         serializer = kwargs['serializer']
@@ -61,6 +64,35 @@ class MailHandlerPlugin(IntegrationFormHandlerPlugin):
         )
 
         files = self._prepare_files(request, serializer)
+
+        subject_mapping = re.findall("\B\$\w+", form_handler_plugin.data.subject)
+        body_mapping = re.findall("\B\$\w+", form_handler_plugin.data.body)
+        subject_dict = {}
+        body_dict = {}
+
+        for i in subject_mapping:
+            key = i[1:]
+            if key == 'form_name':
+                subject_dict['form_name'] = form_entry.name
+            if key == 'first_name':
+                subject_dict['first_name'] = request.user.first_name
+            if key == 'last_name':
+                subject_dict['last_name'] = request.user.last_name
+            if key == 'email':
+                subject_dict['email'] = request.user.email
+        form_handler_plugin.data.subject = Template(form_handler_plugin.data.subject).substitute(**subject_dict)
+
+        for j in body_mapping:
+            key = j[1:]
+            if key == 'form_name':
+                body_dict['form_name'] = form_entry.name
+            if key == 'first_name':
+                body_dict['first_name'] = request.user.first_name
+            if key == 'last_name':
+                body_dict['last_name'] = request.user.last_name
+            if key == 'email':
+                body_dict['email'] = request.user.email
+        form_handler_plugin.data.body = Template(form_handler_plugin.data.body).substitute(**body_dict)
 
         form_handler_plugin.send_email(rendered_data, files)
 
