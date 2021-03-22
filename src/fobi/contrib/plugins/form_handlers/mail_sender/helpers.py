@@ -3,6 +3,9 @@ from __future__ import absolute_import
 from django.core.mail import get_connection
 from django.core.mail.message import EmailMultiAlternatives
 
+from config import celery_app
+
+
 __title__ = 'fobi.contrib.plugins.form_handlers.mail_sender.helpers'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __copyright__ = '2014-2019 Artur Barseghyan'
@@ -10,6 +13,7 @@ __license__ = 'GPL 2.0/LGPL 2.1'
 __all__ = ('send_mail',)
 
 
+@celery_app.task()
 def send_mail(subject, message, from_email, recipient_list,
               fail_silently=False, auth_user=None, auth_password=None,
               connection=None, html_message=None, attachments=None):
