@@ -92,6 +92,7 @@ class SavedFormDataEntry(AbstractSavedFormDataEntry):
         blank=True,
         on_delete=models.CASCADE
     )
+    metadata = models.JSONField(null=True)
 
     class Meta(object):
         """Meta options."""

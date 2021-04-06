@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import logging
+import uuid
 
 from autoslug import AutoSlugField
 
@@ -358,6 +359,7 @@ class FormWizardEntry(models.Model):
 class FormEntry(models.Model):
     """Form entry."""
 
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     user = models.ForeignKey(
         AUTH_USER_MODEL,
         verbose_name=_("User"),
@@ -452,6 +454,7 @@ class FormEntry(models.Model):
         blank=True,
         auto_now=True
     )
+    metadata = models.JSONField(null=True)
 
     class Meta(object):
         """Meta class."""
