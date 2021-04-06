@@ -7,13 +7,13 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('fobi', '0017_formentry_metadata'),
+        ('fobi', '0019_populate_uuid_values'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='formentry',
             name='uuid',
-            field=models.UUIDField(default=uuid.uuid4, null=True),
+            field=models.UUIDField(default=uuid.uuid4, unique=True),
         ),
     ]
