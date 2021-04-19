@@ -722,6 +722,7 @@ class FormElementEntry(AbstractPluginEntry):
         null=True,
         blank=True
     )
+    metadata = models.JSONField(null=True)
 
     class Meta(object):
         """Meta class."""
