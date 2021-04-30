@@ -717,11 +717,7 @@ class FormElementEntry(AbstractPluginEntry):
         blank=True,
         on_delete=models.CASCADE
     )
-    position = models.PositiveIntegerField(
-        _("Position"),
-        null=True,
-        blank=True
-    )
+    position = models.DecimalField(max_digits=30,decimal_places=15, blank=True, null=True)
     metadata = models.JSONField(null=True)
 
     class Meta(object):
