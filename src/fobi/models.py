@@ -455,6 +455,7 @@ class FormEntry(models.Model):
         auto_now=True
     )
     metadata = models.JSONField(null=True)
+    is_template = models.BooleanField(default=False)
 
     class Meta(object):
         """Meta class."""
