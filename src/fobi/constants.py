@@ -55,3 +55,5 @@ WIZARD_TYPES = (
     (WIZARD_TYPE_SESSION, "Session wizard"),
     (WIZARD_TYPE_COOKIE, "Cookie wizard"),
 )
+
+DOLLAR_REGEX = "\B\$\w+"

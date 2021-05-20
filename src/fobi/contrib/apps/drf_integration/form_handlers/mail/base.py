@@ -12,6 +12,7 @@ from . import UID
 from ... import UID as INTEGRATE_WITH_UID
 from ...base import get_processed_serializer_data
 from ......base import IntegrationFormHandlerPlugin
+from ......constants import DOLLAR_REGEX
 from ......helpers import extract_file_path
 
 __title__ = 'fobi.contrib.apps.drf_integration.' \
@@ -70,8 +71,8 @@ class MailHandlerPlugin(IntegrationFormHandlerPlugin):
 
         files = self._prepare_files(request, serializer)
 
-        subject_mapping = re.findall("\B\$\w+", form_handler_plugin.data.subject)
-        body_mapping = re.findall("\B\$\w+", form_handler_plugin.data.body)
+        subject_mapping = re.findall(DOLLAR_REGEX, form_handler_plugin.data.subject)
+        body_mapping = re.findall(DOLLAR_REGEX, form_handler_plugin.data.body)
         subject_dict = {}
         body_dict = {}
 
