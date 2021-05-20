@@ -70,8 +70,8 @@ class MailHandlerPlugin(IntegrationFormHandlerPlugin):
 
         files = self._prepare_files(request, serializer)
 
-        subject_mapping = re.findall(DOLLAR_REGEX, form_handler_plugin.data.subject)
-        body_mapping = re.findall(DOLLAR_REGEX, form_handler_plugin.data.body)
+        subject_mapping = re.findall("\B\$\w+", form_handler_plugin.data.subject)
+        body_mapping = re.findall("\B\$\w+", form_handler_plugin.data.body)
         subject_dict = {}
         body_dict = {}
 
