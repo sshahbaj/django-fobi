@@ -12,7 +12,6 @@ from . import UID
 from ... import UID as INTEGRATE_WITH_UID
 from ...base import get_processed_serializer_data
 from ......base import IntegrationFormHandlerPlugin
-from ......constants import DOLLAR_REGEX
 from ......helpers import extract_file_path
 
 __title__ = 'fobi.contrib.apps.drf_integration.' \
