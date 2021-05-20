@@ -47,9 +47,14 @@ class MailSenderHandlerPlugin(IntegrationFormHandlerPlugin):
             **kwargs):
         """Run."""
         is_active = form_handler_plugin.plugin_data.get("is_active")
+        form_field_name_to_email = form_handler_plugin.plugin_data.get("form_field_name_to_email")
+
+        if form_field_name_to_email is None or form_field_name_to_email == "":
+            return
 
         if not is_active:
             return
+
         base_url = form_handler_plugin.get_base_url(request)
 
         serializer = kwargs['serializer']
