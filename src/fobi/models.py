@@ -456,6 +456,7 @@ class FormEntry(models.Model):
     )
     metadata = models.JSONField(null=True)
     is_template = models.BooleanField(default=False)
+    login_required = models.BooleanField(default=True)
 
     class Meta(object):
         """Meta class."""
