@@ -720,6 +720,7 @@ class FormElementEntry(AbstractPluginEntry):
     )
     position = models.DecimalField(max_digits=100, decimal_places=20, blank=True, null=True)
     metadata = models.JSONField(null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta(object):
         """Meta class."""
