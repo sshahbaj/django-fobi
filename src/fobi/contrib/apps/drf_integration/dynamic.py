@@ -57,7 +57,7 @@ def get_declared_fields(form_entry,
     declared_fields = []
     declared_fields_metadata = []
     if form_element_entries is None:
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
 
     for creation_counter, form_element_entry \
             in enumerate(form_element_entries):

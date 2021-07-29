@@ -734,7 +734,7 @@ def get_form_element_entries_for_form_wizard_entry(form_wizard_entry):
             in form_wizard_entry.formwizardformentry_set.all():
         form_element_entries += form_wizard_form_entry \
                                     .form_entry \
-                                    .formelemententry_set.all()[:]
+                                    .formelemententry_set.filter(is_active=True)[:]
     return form_element_entries
 
 

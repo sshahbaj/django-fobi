@@ -134,8 +134,7 @@ class IntegrationProcessor(object):
                     request, instance, **kwargs
                 )
 
-        form_element_entries = instance.form_entry.formelemententry_set.all(
-        )[:]
+        form_element_entries = instance.form_entry.formelemententry_set.filter(is_active=True)[:]
         # This is where the most of the magic happens. Our form is being built
         # dynamically.
         form_cls = assemble_form_class(

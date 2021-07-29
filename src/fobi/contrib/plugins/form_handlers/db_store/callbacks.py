@@ -42,7 +42,7 @@ class AutoFormDbStore(FormCallback):
         :param form:
         :return:
         """
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
 
         # Clean up the values, leave our content fields and empty values.
         field_name_to_label_map, cleaned_data = get_processed_form_data(

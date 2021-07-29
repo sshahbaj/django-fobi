@@ -53,7 +53,7 @@ def assemble_form_class(form_entry,
         the :method:`get_form_field_instances_kwargs`.
     """
     if form_element_entries is None:
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
 
     # DeclarativeFieldsMetaclass
     class DeclarativeFieldsMetaclass(type):

@@ -154,7 +154,7 @@ class FobiFormEntryViewSet(
                                            serializer):
         """Handle form entry data submission."""
         # Try to fetch only once.
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
 
         # Fire form valid before submit plugin data
         serializer = fire_form_callbacks(

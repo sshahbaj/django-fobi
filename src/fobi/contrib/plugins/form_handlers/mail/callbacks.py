@@ -44,7 +44,7 @@ class AutoFormMail(FormCallback, MailHandlerMixin):
         :param form:
         :return:
         """
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
 
         base_url = self.get_base_url(request)
 

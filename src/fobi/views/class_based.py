@@ -524,13 +524,13 @@ class ViewFormEntryView(FormEntryMixin,FobiThemeRedirectMixin,ProcessFormView):
 
     def dispatch(self, request,  *args, **kwargs):
         response = super(ViewFormEntryView, self).dispatch(request, *args, **kwargs)
-        self.theme.collect_plugin_media(self.form_entry.formelemententry_set.all()[:])
+        self.theme.collect_plugin_media(self.form_entry.formelemententry_set.filter(is_active=True)[:])
         return response
 
     def get_form_class(self):
         return assemble_form_class(
             self.form_entry,
-            form_element_entries=self.form_entry.formelemententry_set.all()[:],
+            form_element_entries=self.form_entry.formelemententry_set.filter(is_active=True)[:],
             request=self.request,
         )
 
@@ -543,7 +543,7 @@ class ViewFormEntryView(FormEntryMixin,FobiThemeRedirectMixin,ProcessFormView):
                             or self.form_entry.title
                             or self.form_entry.name)
             })
-        kwargs['form_element_entries'] = self.form_entry.formelemententry_set.all()[:]
+        kwargs['form_element_entries'] = self.form_entry.formelemententry_set.filter(is_active=True)[:]
         kwargs['fobi_form_title'] = self.form_entry.title
         if 'form' not in kwargs:
             kwargs['form'] = self.get_form()
@@ -682,7 +682,7 @@ class FormWizardView(DynamicSessionWizardView):
         wizard_form_element_entries = []
         for creation_counter, form_entry in enumerate(form_entries):
             # Using frozen queryset to minimize query usage
-            form_element_entries = form_entry.formelemententry_set.all()[:]
+            form_element_entries = form_entry.formelemententry_set.filter(is_active=True)[:]
             wizard_form_element_entries += form_element_entries
             form_cls = assemble_form_class(
                 form_entry,
@@ -1146,7 +1146,7 @@ class EditFormEntryView(FobiThemeRedirectMixin, PageTitleMixin, FobiFormsetOrder
 
     def get_context_data(self, **kwargs):
         context = super(EditFormEntryView, self).get_context_data(**kwargs)
-        context['form_elements'] = self.object.formelemententry_set.all()
+        context['form_elements'] = self.object.formelemententry_set.filter(is_active=True)
         context['form_handlers'] = self.object.formhandlerentry_set.all()[:]
 
         context['used_form_handler_uids'] = [
@@ -1258,7 +1258,7 @@ class AddFormElementEntryView(FobiThemeRedirectMixin, SingleObjectMixin, Redirec
     def get_context_data(self, **kwargs):
         context = super(AddFormElementEntryView, self).get_context_data(**kwargs)
         self.object = self.get_object()
-        context['form_elements'] = self.object.formelemententry_set.all()
+        context['form_elements'] = self.object.formelemententry_set.filter(is_active=True)
         user_form_element_plugin_uids = get_user_form_field_plugin_uids(
             self.request.user
         )

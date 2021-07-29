@@ -728,7 +728,7 @@ def prepare_form_entry_export_data(form_entry,
     }
 
     if not form_element_entries:
-        form_element_entries = form_entry.formelemententry_set.all()[:]
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)[:]
 
     if not form_handler_entries:
         form_handler_entries = form_entry.formhandlerentry_set.all()[:]

@@ -1852,7 +1852,7 @@ class FormHandlerPlugin(BasePlugin):
         """
         # For backwards compatibility.
         if not form_element_entries:
-            form_element_entries = form_entry.formelemententry_set.all()[:]
+            form_element_entries = form_entry.formelemententry_set.filter(is_active=True)[:]
 
         if FAIL_ON_ERRORS_IN_FORM_HANDLER_PLUGINS:
             response = self.run(form_entry, request, form,
@@ -3022,7 +3022,7 @@ def submit_plugin_form_data(form_entry, request, form,
     :param iterable form_element_entries:
     """
     if not form_element_entries:
-        form_element_entries = form_entry.formelemententry_set.all()
+        form_element_entries = form_entry.formelemententry_set.filter(is_active=True)
     for form_element_entry in form_element_entries:
         # Get the plugin.
         form_element_plugin = form_element_entry.get_plugin(request=request)

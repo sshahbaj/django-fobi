@@ -431,7 +431,7 @@ def edit_form_entry(request, form_entry_id, theme=None, template_name=None):
             form_element_entry_formset = FormElementEntryFormSet(
                 request.POST,
                 request.FILES,
-                queryset=form_entry.formelemententry_set.all(),
+                queryset=form_entry.formelemententry_set.filter(is_active=True),
                 # prefix = 'form_element'
             )
             # If form elements aren't properly made (developers's fault)
@@ -461,7 +461,7 @@ def edit_form_entry(request, form_entry_id, theme=None, template_name=None):
                 )
         else:
             form_element_entry_formset = FormElementEntryFormSet(
-                queryset=form_entry.formelemententry_set.all(),
+                queryset=form_entry.formelemententry_set.filter(is_active=True),
                 # prefix='form_element'
             )
 
@@ -494,13 +494,13 @@ def edit_form_entry(request, form_entry_id, theme=None, template_name=None):
         form = FormEntryForm(instance=form_entry, request=request)
 
         form_element_entry_formset = FormElementEntryFormSet(
-            queryset=form_entry.formelemententry_set.all(),
+            queryset=form_entry.formelemententry_set.filter(is_active=True),
             # prefix='form_element'
         )
 
     # In case of success, we don't need this (since redirect would happen).
     # Thus, fetch only if needed.
-    form_elements = form_entry.formelemententry_set.all()
+    form_elements = form_entry.formelemententry_set.filter(is_active=True)
     form_handlers = form_entry.formhandlerentry_set.all()[:]
     used_form_handler_uids = [form_handler.plugin_uid
                               for form_handler
@@ -632,7 +632,7 @@ def add_form_element_entry(request,
     except ObjectDoesNotExist as err:
         raise Http404(gettext("Form entry not found."))
 
-    form_elements = form_entry.formelemententry_set.all()
+    form_elements = form_entry.formelemententry_set.filter(is_active=True)
 
     user_form_element_plugin_uids = get_user_form_field_plugin_uids(
         request.user
@@ -1430,7 +1430,7 @@ class FormWizardView(DynamicSessionWizardView):
         wizard_form_element_entries = []
         for creation_counter, form_entry in enumerate(form_entries):
             # Using frozen queryset to minimize query usage
-            form_element_entries = form_entry.formelemententry_set.all()[:]
+            form_element_entries = form_entry.formelemententry_set.filter(is_active=True)[:]
             wizard_form_element_entries += form_element_entries
             form_cls = assemble_form_class(
                 form_entry,
@@ -2142,7 +2142,7 @@ def view_form_entry(request, form_entry_slug, theme=None, template_name=None):
 
         return render(request, template_name, context)
 
-    form_element_entries = form_entry.formelemententry_set.all()[:]
+    form_element_entries = form_entry.formelemententry_set.filter(is_active=True)[:]
 
     # This is where the most of the magic happens. Our form is being built
     # dynamically.
