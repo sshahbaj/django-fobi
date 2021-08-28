@@ -49,7 +49,7 @@ class DBStoreHandlerPlugin(IntegrationFormHandlerPlugin):
             form_element_entries
         )
 
-        form_handler_plugin.save_form_data_entry(
+        return form_handler_plugin.save_form_data_entry(
             form_entry,
             request,
             field_name_to_label_map,

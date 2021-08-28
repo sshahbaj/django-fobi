@@ -89,7 +89,8 @@ class DBStoreHandlerPlugin(FormHandlerPlugin):
             saved_data=json.dumps(cleaned_data, cls=DjangoJSONEncoder),
             metadata=metadata
         )
-        return saved_form_data_entry.save()
+        saved_form_data_entry.save()
+        return saved_form_data_entry
 
     def custom_actions(self, form_entry, request=None):
         """Custom actions.
