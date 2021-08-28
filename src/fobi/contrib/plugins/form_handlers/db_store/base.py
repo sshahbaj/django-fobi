@@ -60,7 +60,7 @@ class DBStoreHandlerPlugin(FormHandlerPlugin):
             form_element_entries
         )
 
-        self.save_form_data_entry(
+        return self.save_form_data_entry(
             form_entry,
             request,
             field_name_to_label_map,
@@ -89,7 +89,7 @@ class DBStoreHandlerPlugin(FormHandlerPlugin):
             saved_data=json.dumps(cleaned_data, cls=DjangoJSONEncoder),
             metadata=metadata
         )
-        saved_form_data_entry.save()
+        return saved_form_data_entry.save()
 
     def custom_actions(self, form_entry, request=None):
         """Custom actions.
