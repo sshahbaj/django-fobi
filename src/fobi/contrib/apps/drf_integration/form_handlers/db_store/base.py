@@ -54,7 +54,7 @@ class DBStoreHandlerPlugin(IntegrationFormHandlerPlugin):
             request,
             field_name_to_label_map,
             cleaned_data
-        ), None
+        )
 
     def _prepare_files(self, request, serializer):
         """Prepares the files for being attached to the mail message."""
