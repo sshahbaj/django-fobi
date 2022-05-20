@@ -93,6 +93,8 @@ class SavedFormDataEntry(AbstractSavedFormDataEntry):
         on_delete=models.CASCADE
     )
     metadata = models.JSONField(null=True)
+    notes = models.TextField(blank=True)
+    read = models.BooleanField(default=False)
 
     class Meta(object):
         """Meta options."""
